@@ -11,10 +11,6 @@
         <input type="time" id="appointmentTime" v-model="formData.hora" required>
       </div>
       <div class="form-group">
-        <label for="appointmentName">Cliente:</label>
-        <input type="text" id="appointmentName" v-model="formData.nome" required>
-      </div>
-      <div class="form-group">
         <label class="service-label-main">Serviço:</label><br>
         <div v-for="(service, index) in services" :key="index" class="radio-group">
           <input type="radio" :id="'service' + index" :value="service.servico" v-model="formData.servico">
@@ -39,7 +35,6 @@ export default {
       formData: {
         data: '',
         hora: '',
-        nome: '',
         servico: ''
       },
       services: []

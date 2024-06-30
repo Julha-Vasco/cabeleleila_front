@@ -2,7 +2,7 @@
   <div class="login-container">
     <form @submit.prevent="login" class="login-form">
       <div class="login-text">Login</div>
-      <input type="text" v-model="username" placeholder="Usuário" required>
+      <input type="text" v-model="email" placeholder="Usuário" required>
       <input type="password" v-model="password" placeholder="Senha" required>
       <button type="submit">Login</button>
       <p class="register-link">Ainda não possui uma conta? <router-link to="/register">Cadastre-se aqui</router-link></p>
@@ -11,17 +11,18 @@
 </template>
 
 <script>
+import authService from '@/service/authService'
 export default {
   data () {
     return {
-      username: '',
+      email: '',
       password: ''
     }
   },
   methods: {
     login () {
-      this.$emit('login', {
-        username: this.username,
+      authService.login({
+        email: this.email,
         password: this.password
       })
     }

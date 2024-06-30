@@ -15,7 +15,9 @@ const agendamentoService = {
 
   getAgendamentos: async () => {
     try {
-      const response = await axios.get(API_URL)
+      const token = window.localStorage.getItem('AccessToken')
+
+      const response = await axios.get(API_URL, { headers: { Authorization: `Bearer ${token}` } })
       return response.data
     } catch (error) {
       console.error('Erro ao buscar agendamentos:', error)

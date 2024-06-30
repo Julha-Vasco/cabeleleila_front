@@ -8,7 +8,13 @@ const authService = {
       console.log('Enviando requisição de login com credenciais:', credentials)
       const response = await axios.post(`${API_URL}/login`, credentials)
       console.log('Resposta do servidor:', response)
-      return response.data
+
+      const { accessToken } = response.data.data
+      if (accessToken) {
+        window.localStorage.setItem('AccessToken', accessToken)
+      }
+
+      return true
     } catch (error) {
       console.error('Erro de autenticação:', error)
       throw error

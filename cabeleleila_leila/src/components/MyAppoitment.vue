@@ -15,7 +15,6 @@
         <tr v-for="(agendamento, index) in agendamentos" :key="agendamento.id">
           <td>{{ agendamento.data }}</td>
           <td>{{ agendamento.hora }}</td>
-          <td>{{ agendamento.nome }}</td>
           <td>{{ agendamento.servico }}</td>
           <td class="acoes">
             <span @click="editarAgendamento(agendamento.id, index)">
