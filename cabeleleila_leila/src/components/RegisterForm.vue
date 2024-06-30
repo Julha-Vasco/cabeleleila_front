@@ -3,6 +3,7 @@
     <form @submit.prevent="register" class="login-form">
       <div class="login-text">Cadastrar</div>
       <input type="text" v-model="email" placeholder="E-mail" required autocomplete="off">
+      <input type="text" v-model="username" placeholder="Usuário" required autocomplete="off">
       <input type="password" v-model="password" placeholder="Senha" required autocomplete="off">
       <input type="password" v-model="confirmPassword" placeholder="Confirme a senha" required autocomplete="off">
       <button type="submit">Cadastrar</button>

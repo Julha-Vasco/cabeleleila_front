@@ -5,7 +5,9 @@ const API_URL = 'http://localhost:3000/agendamentos'
 const agendamentoService = {
   getAgendamento: async (id) => {
     try {
-      const response = await axios.get(`${API_URL}/${id}`)
+      const token = window.localStorage.getItem('AccessToken')
+
+      const response = await axios.get(`${API_URL}/${id}`, { headers: { Authorization: `Bearer ${token}` } })
       return response.data
     } catch (error) {
       console.error('Erro ao buscar agendamentos:', error)
@@ -27,7 +29,9 @@ const agendamentoService = {
 
   async deleteAgendamento (id) {
     try {
-      const response = await axios.delete(`${API_URL}/${id}`)
+      const token = window.localStorage.getItem('AccessToken')
+
+      const response = await axios.delete(`${API_URL}/${id}`, { headers: { Authorization: `Bearer ${token}` } })
       return response.data
     } catch (error) {
       console.error(`Erro ao deletar agendamento de ID ${id}:`, error)
@@ -37,7 +41,9 @@ const agendamentoService = {
 
   updateAgendamento: async (id, formData) => {
     try {
-      const response = await axios.put(`${API_URL}/${id}`, formData)
+      const token = window.localStorage.getItem('AccessToken')
+
+      const response = await axios.put(`${API_URL}/${id}`, formData, { headers: { Authorization: `Bearer ${token}` } })
       return response.data
     } catch (error) {
       console.error('Erro ao atualizar agendamento:', error)
@@ -47,7 +53,9 @@ const agendamentoService = {
 
   createAgendamento: async (formData) => {
     try {
-      const response = await axios.post(API_URL, formData)
+      const token = window.localStorage.getItem('AccessToken')
+
+      const response = await axios.post(API_URL, formData, { headers: { Authorization: `Bearer ${token}` } })
       return response.data
     } catch (error) {
       console.error('Erro ao criar agendamento:', error)
