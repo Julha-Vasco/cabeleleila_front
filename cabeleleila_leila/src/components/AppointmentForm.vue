@@ -1,6 +1,6 @@
 <template>
   <div class="appointment-form">
-    <h2>Editar Agendamento</h2>
+    <h2>Agendamento</h2>
     <form @submit.prevent="submitForm">
       <div class="form-group">
         <label for="appointmentDate">Data de Agendamento:</label>

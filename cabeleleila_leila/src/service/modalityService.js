@@ -6,7 +6,7 @@ const servicoService = {
   getServicos: async () => {
     try {
       const response = await axios.get(`${API_URL}/servicos`)
-      return response.data
+      return response.data.sort((sA, sB) => sA.servico.localeCompare(sB.servico))
     } catch (error) {
       console.error('Erro ao buscar serviços:', error)
       throw error
