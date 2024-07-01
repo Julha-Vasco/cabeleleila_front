@@ -2,13 +2,11 @@
   <div class="background-image">
     <slot></slot>
 
-    <router-link
-      v-if="!isAuthenticated"
-      to="/login"
-      class="login-button"
-    >
+    <router-link v-if="!isAuthenticated" to="/" class="login-button">
       <span class="mdi mdi-account"></span> Login
     </router-link>
+
+    <logout-button v-if="isAuthenticated" />
 
     <footer-icon class="footer-icon" />
   </div>
@@ -17,11 +15,26 @@
 <script>
 import FooterIcon from './FooterIcon.vue'
 import { mapGetters } from 'vuex'
+import { useRouter } from 'vue-router'
+import authService from '@/service/authService'
+import LogoutButton from './LogoutButton.vue'
 
 export default {
   components: {
-    FooterIcon
+    FooterIcon,
+    LogoutButton
   },
+
+  setup () {
+    const router = useRouter()
+
+    const isAuthenticated = authService.isLoggedIn()
+
+    return {
+      isAuthenticated
+    }
+  },
+
   computed: {
     ...mapGetters(['isAuthenticated'])
   }

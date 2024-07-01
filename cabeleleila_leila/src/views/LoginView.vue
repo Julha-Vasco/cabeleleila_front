@@ -1,5 +1,8 @@
 <template>
-  <login-form @login="handleLogin"></login-form>
+  <div class="background-image">
+    <h1 class="welcome-title">Bem-vindo ao Cabeleleila Leila</h1>
+    <login-form @login="handleLogin"></login-form>
+  </div>
 </template>
 
 <script>
@@ -17,18 +20,15 @@ export default {
 
     const handleLogin = async (credentials) => {
       try {
-        console.log('Tentando fazer login com credenciais:', credentials)
         const response = await authService.login(credentials)
         if (response.user) {
-          console.log('Login bem-sucedido:', response.user)
-          router.push({ name: 'agendamento' }) // Redireciona para a rota após login
+          alert('Login bem-sucedido')
+          router.push({ name: 'agendamento' })
         } else {
-          console.error('Credenciais inválidas')
-          // Lógica para lidar com credenciais inválidas, se necessário
+          alert('Credenciais inválidas')
         }
       } catch (error) {
         console.error('Erro ao fazer login:', error)
-        // Lógica para lidar com erro de login, exibir mensagem de erro, etc.
       }
     }
 
@@ -40,4 +40,23 @@ export default {
 </script>
 
 <style scoped>
+.background-image {
+  background-image: url('@/assets/imagem1s.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3rem;
+  text-align: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
 </style>

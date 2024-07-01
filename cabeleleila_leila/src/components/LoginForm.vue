@@ -1,10 +1,12 @@
 <template>
-  <div class="login-container">
+  <div >
     <form @submit.prevent="login" class="login-form">
       <div class="login-text">Login</div>
       <input type="text" v-model="email" placeholder="Usuário" required>
       <input type="password" v-model="password" placeholder="Senha" required>
-      <button type="submit">Login</button>
+      <div class="button-container">
+        <button type="submit">Entrar</button>
+      </div>
       <p class="register-link">Ainda não possui uma conta? <router-link to="/register">Cadastre-se aqui</router-link></p>
     </form>
   </div>
@@ -12,6 +14,7 @@
 
 <script>
 import authService from '@/service/authService'
+
 export default {
   data () {
     return {
@@ -20,29 +23,28 @@ export default {
     }
   },
   methods: {
-    login () {
-      authService.login({
-        email: this.email,
-        password: this.password
-      })
+    async login () {
+      try {
+        await authService.login({
+          email: this.email,
+          password: this.password
+        })
+        this.$emit('login-success')
+        this.$router.push('/home')
+      } catch (error) {
+        this.errorMessage = 'Usuário ou senha incorretos.'
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  overflow: hidden;
-}
-
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 60vh;
   border-radius: 10px;
   overflow: hidden;
   background: linear-gradient(to bottom, #ffffff, #808080, #000000);
@@ -56,6 +58,7 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: rgba(255, 255, 255, 0.8)
 }
 
 .login-text {
@@ -74,8 +77,16 @@ html, body {
   box-sizing: border-box;
 }
 
-.login-form button {
+.button-container {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.button-container button {
+  width: 100%;
+  max-width: 900px;
   padding: 10px;
   background-color: #1b1b1b;
   color: white;
@@ -85,18 +96,18 @@ html, body {
   transition: background-color 0.3s;
 }
 
-.login-form button:hover {
+.button-container button:hover {
   background-color: #888a8b;
 }
 
 .register-link {
   margin-top: 10px;
-  color: white;
+  color: rgb(32, 32, 32);
   font-size: 0.9rem;
 }
 
 .register-link a {
-  color: #85d1f7;
+  color: #0a0a0a;
   text-decoration: none;
 }
 

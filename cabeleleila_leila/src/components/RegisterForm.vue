@@ -2,32 +2,65 @@
   <div class="login-container">
     <form @submit.prevent="register" class="login-form">
       <div class="login-text">Cadastrar</div>
-      <input type="text" v-model="email" placeholder="E-mail" required autocomplete="off">
       <input type="text" v-model="username" placeholder="Usuário" required autocomplete="off">
-      <input type="password" v-model="password" placeholder="Senha" required autocomplete="off">
+      <input type="text" v-model="email" placeholder="E-mail" required autocomplete="off">
+      <input type="password" v-model="password" placeholder="Senha" >
       <input type="password" v-model="confirmPassword" placeholder="Confirme a senha" required autocomplete="off">
-      <button type="submit">Cadastrar</button>
-      <button type="submit">Cancelar</button>
+      <div class="button-container">
+        <button type="submit">Cadastrar</button>
+        <button type="button" @click="cancel">Cancelar</button>
+      </div>
     </form>
   </div>
 </template>
 
 <script>
+import userCreateService from '@/service/userService'
+
 export default {
   data () {
     return {
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      username: ''
     }
   },
   methods: {
-    login () {
-      this.$emit('login', {
+    async register () {
+      if (this.password !== this.confirmPassword) {
+        alert('As senhas não correspondem.')
+        return
+      }
+
+      const credentials = {
         email: this.email,
         password: this.password,
-        confirmPassword: this.confirmPassword
-      })
+        username: this.username
+      }
+
+      try {
+        const result = await userCreateService.userCreate(credentials)
+        if (result) {
+          alert('Registro bem-sucedido!')
+          this.resetForm()
+          this.$router.push('/home')
+        }
+      } catch (error) {
+        console.error('Erro ao registrar:', error)
+        alert('Houve um problema ao registrar. Tente novamente.')
+      }
+    },
+    cancel () {
+      this.$emit('fechar')
+      this.resetForm()
+      this.$router.push('/')
+    },
+    resetForm () {
+      this.email = ''
+      this.password = ''
+      this.confirmPassword = ''
+      this.username = ''
     }
   }
 }
@@ -49,6 +82,9 @@ html, body {
   border-radius: 10px;
   overflow: hidden;
   background: linear-gradient(to bottom, #ffffff, #808080, #000000);
+  background-image: url('@/assets/imagem1s.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .login-form {
@@ -59,6 +95,7 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .login-text {
@@ -77,8 +114,14 @@ html, body {
   box-sizing: border-box;
 }
 
-.login-form button {
+.button-container {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-container button {
+  width: 48%;
   padding: 10px;
   background-color: #1b1b1b;
   color: white;
@@ -88,7 +131,7 @@ html, body {
   transition: background-color 0.3s;
 }
 
-.login-form button:hover {
+.button-container button:hover {
   background-color: #888a8b;
 }
 

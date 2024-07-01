@@ -6,7 +6,6 @@
         <tr>
           <th>Data</th>
           <th>Horário</th>
-          <th>Cliente</th>
           <th>Serviço</th>
           <th>Ações</th>
         </tr>
