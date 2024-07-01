@@ -33,6 +33,11 @@ export default {
         return
       }
 
+      if (this.isEmailRegisteredLocally(this.email)) {
+        this.errorMessage = 'Este e-mail já está registrado.'
+        return
+      }
+
       const credentials = {
         email: this.email,
         password: this.password,
@@ -51,6 +56,7 @@ export default {
         alert('Houve um problema ao registrar. Tente novamente.')
       }
     },
+
     cancel () {
       this.$emit('fechar')
       this.resetForm()
